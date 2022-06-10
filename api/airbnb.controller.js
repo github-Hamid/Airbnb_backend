@@ -128,7 +128,7 @@ export default class AirbnbController
 
 
 
-    static async getListByPrice_Type(req, res, next)
+    static async apiGetListByPrice_Type(req, res, next)
     {
         try {
             let price = parseInt(req.query.price);
@@ -141,6 +141,25 @@ export default class AirbnbController
             res.status(400).json({error : e});
         } catch (e) {
            console.log(`api filter by price and type, ${e}`);    
+           res.status(500).json({error : e}) 
+        }
+       
+    }
+
+    static async apiGetListByPrice_Type_country(req, res, next)
+    {
+        try {
+            let price = parseInt(req.query.price);
+            let type = req.query.type;
+            let country = req.query.country;
+            const list = await AirbnbDAO.getbyPrice_Type_Country(price, type, country);
+            if(list)
+             // getting the price from list -> parseFloat(list[0].price).toFixed(2)
+             res.status(200).json({list : list});
+            else
+            res.status(400).json({error : e});
+        } catch (e) {
+           console.log(`api filter by price, type and country, ${e}`);    
            res.status(500).json({error : e}) 
         }
        

@@ -72,5 +72,12 @@ export class AirbnbDAO
         return findResult;
     }
 
+    static async getbyPrice_Type_Country(price, type, country)
+    {
+        let query = {$and : [{price : {$lte : price}},{property_type : {$regex : type, $options : i}},{"address.country" : {$regex : country, $options : i}}]};
+        let findResult = await lists.find(query).limit(150).toArray();
+        return findResult;
+    }
+
    
 }
