@@ -34,6 +34,25 @@ export default class AirbnbController
         }
     }
 
+    static async apiGetListByCountry(req, res, next)
+    {
+        try {
+            let country = req.params.country;
+            let list = await AirbnbDAO.getByCountry(country);
+            if(list)
+            {
+                res.status(200).json({list : list})
+            }
+            else
+            res.status(400).json({error : "List not found"});
+        } catch (e) {
+            console.log(`api filter by country, ${e}`);
+            res.status(500).json({error : e})
+        }
+       
+
+    }
+
 
     static async apiGetListByType(req, res, next)
     {
@@ -51,6 +70,7 @@ export default class AirbnbController
         }
     }
 
+
     static async apiGetListByPrice(req, res, next)
     {
          try {
@@ -67,6 +87,46 @@ export default class AirbnbController
             res.status(500).json({error : e}) 
          }
     }
+
+    static async apiGetListByPrice_country(req, res, next)
+    {
+        try {
+            let price = parseInt(req.query.price);
+            let country = req.query.country;
+            const list = await AirbnbDAO.getByPrice_Country(price, country);
+            if(list)
+            res.status(200).json({list : list})
+            else
+            res.status(400).json({error : e});
+        } catch (e) {
+            console.log(`api filter by price and country, ${e}`);    
+           res.status(500).json({error : e}) 
+        }
+  
+
+    }
+
+
+
+    static async apiGetListByType_country(req, res, next)
+    {
+        try {
+            let type = req.query.type;
+            let country = req.query.country;
+            const list = await AirbnbDAO.getbyType_Country(type, country);
+            if(list)
+            res.status(200).json({list : list})
+            else
+            res.status(400).json({error : e});
+        } catch (e) {
+            console.log(`api filter by type and country, ${e}`);    
+           res.status(500).json({error : e}) 
+        }
+  
+
+    }
+
+
 
     static async getListByPrice_Type(req, res, next)
     {
