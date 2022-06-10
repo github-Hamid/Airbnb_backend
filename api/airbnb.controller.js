@@ -146,7 +146,7 @@ export default class AirbnbController
        
     }
 
-    static async apiGetListByPrice_Type_country(req, res, next)
+    static async apiGetListByPrice_type_country(req, res, next)
     {
         try {
             let price = parseInt(req.query.price);

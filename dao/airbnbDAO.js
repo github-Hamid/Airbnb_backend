@@ -46,7 +46,7 @@ export class AirbnbDAO
 
     static async getByCountry(country)
     {
-        let query = {"address.country" : {$regex : country, $options : i}};
+        let query = {"address.country" : {$regex : country, $options : "i"}};
         let findResult = await lists.find(query).limit(150).toArray();
         return findResult;
     }
@@ -60,21 +60,21 @@ export class AirbnbDAO
 
     static async getByPrice_Country(price, country)
     {
-        let query = {$and : [{price : {$lte : price}}, {"address.country" : {$regex : country, $options : i}}]};
+        let query = {$and : [{price : {$lte : price}}, {"address.country" : {$regex : country, $options : "i"}}]};
         let findResult = await lists.find(query).limit(150).toArray();
         return findResult;
     }
 
     static async getbyType_Country(type, country)
     {
-        let query = {$and : [{property_type : {$regex : type, $options : i}},{"address.country" : {$regex : country, $options : i}}]};
+        let query = {$and : [{property_type : {$regex : type, $options : "i"}},{"address.country" : {$regex : country, $options : "i"}}]};
         let findResult = await lists.find(query).limit(150).toArray();
         return findResult;
     }
 
     static async getbyPrice_Type_Country(price, type, country)
     {
-        let query = {$and : [{price : {$lte : price}},{property_type : {$regex : type, $options : i}},{"address.country" : {$regex : country, $options : i}}]};
+        let query = {$and : [{price : {$lte : price}},{property_type : {$regex : type, $options : "i"}},{"address.country" : {$regex : country, $options : "i"}}]};
         let findResult = await lists.find(query).limit(150).toArray();
         return findResult;
     }
