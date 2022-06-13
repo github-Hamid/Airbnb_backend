@@ -14,9 +14,15 @@ client.connect()
     console.log("Connected successfully to server");
     AirbnbDAO.injectDB(client)
     .then((collection)=>{
-        console.log("Collection is connected successfully");
+        console.log("Lists collection is connected successfully");
+      AirbnbDAO.injectDBUsers(client)
+      .then((collection)=>{
+        console.log("Users collection is connected successfully");
+      
         app.listen(process.env.PORT, ()=>{
-          console.log(`App is listening to port ${process.env.PORT}`);
+          console.log(`App is listening to port ${process.env.PORT}`); 
+      })  
+       
     })    
     
     })

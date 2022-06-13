@@ -4,9 +4,12 @@ export default class AirbnbController
 {
     static async apiGetAllLists(req, res, next)
     {
-       try{ const list = await AirbnbDAO.getAllLists();
+       try{ 
+        const list = await AirbnbDAO.getAllLists();
         if(list)
-        res.status(200).json({list : list});
+        {
+            res.status(200).json({list : list, user : req.session.user});
+        }
         else
         res.status(400).json({error : "List not found"});
         }catch(e)
@@ -164,4 +167,15 @@ export default class AirbnbController
         }
        
     }
+
+
+    static async addUser(req, res, next)
+    {
+        let data = req.body;
+        let status = await AirbnbDAO.addUser(data.fname, data.lname, data.email, data.password);
+        req.session.user = {fname : data.fname, lname : data.lname}; 
+        res.status(200).json({msg : "added successfully", user : req.session.user});
+    }
+
+
 }

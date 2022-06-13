@@ -1,9 +1,23 @@
 
 
 let lists;
-
+let users;
 export class AirbnbDAO
 {
+
+   static async injectDBUsers(conn)
+   {
+    if(users)
+    return users;
+    try {
+        users = await conn.db(process.env.AIRBNB_NS).collection("Users");
+        console.log("connected users collection successfully");
+        return users;
+    } catch (e) {
+        console.error(`unable to establish a collection handle in restaurantsDAO for user: ${e}`);
+    }
+   }
+
     static async injectDB(conn)
     {
         if(lists)
@@ -79,5 +93,21 @@ export class AirbnbDAO
         return findResult;
     }
 
-   
+    static async getUniqueID()
+    {
+        let unique_id = await users.find({key : "counter"}, {"key" : 0}).toArray();
+        return unique_id[0].counter;
+    }
+
+   static async addUser(fname, lname, email, password)
+   {
+       let id = await this.getUniqueID();
+       let query = {id : id, first_name : fname, last_name : lname, email : email, password : password};
+       let result = await users.insertOne(query);
+       console.log("result for inserting:" , result);
+       result = await users.updateOne({key : "counter"}, {$inc : {counter : 1}});
+       console.log("result for updataing unique id:" , result);
+   }
 }
+
+
