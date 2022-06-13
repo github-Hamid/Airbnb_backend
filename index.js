@@ -19,7 +19,7 @@ client.connect()
       .then((collection)=>{
         console.log("Users collection is connected successfully");
       
-        app.listen(process.env.PORT || 5000, ()=>{
+        app.listen(process.env.PORT || 3000, ()=>{
           console.log(`App is listening to port ${process.env.PORT}`); 
       })  
        
