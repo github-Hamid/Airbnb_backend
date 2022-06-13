@@ -10,7 +10,7 @@ export class AirbnbDAO
     if(users)
     return users;
     try {
-        users = await conn.db(process.env.AIRBNB_NS).collection("Users");
+        users = await conn.db(process.env.AIRBNB_NS || "sample_airbnb").collection("Users");
         console.log("connected users collection successfully");
         return users;
     } catch (e) {

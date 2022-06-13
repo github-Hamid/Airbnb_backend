@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const url = process.env.AIRBNB_DB_URI;
+const url = process.env.AIRBNB_DB_URI || "mongodb+srv://Hamid:MERN@mernstack.safka.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(url);
 
 
