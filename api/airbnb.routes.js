@@ -12,5 +12,6 @@ router.route("/price&country").get(AirbnbController.apiGetListByPrice_country);
 router.route("/type&country").get(AirbnbController.apiGetListByType_country);
 router.route("/price&type&country").get(AirbnbController.apiGetListByPrice_type_country);
 router.route("/signup").post(AirbnbController.addUser);
+router.route("/signin").post(AirbnbController.getUser);
 
 export default router; 

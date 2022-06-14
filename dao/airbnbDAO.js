@@ -104,9 +104,16 @@ export class AirbnbDAO
        let id = await this.getUniqueID();
        let query = {id : id, first_name : fname, last_name : lname, email : email, password : password};
        let result = await users.insertOne(query);
-       console.log("result for inserting:" , result);
+     //  console.log("result for inserting:" , result);
        result = await users.updateOne({key : "counter"}, {$inc : {counter : 1}});
-       console.log("result for updataing unique id:" , result);
+    //    console.log("result for updataing unique id:" , result);
+   }
+
+   static async getUser(email, password)
+   {
+    let query = {$and : [{email : email},{password : password}]};
+    let result = await users.findOne(query);
+    return result;
    }
 }
 

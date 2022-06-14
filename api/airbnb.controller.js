@@ -6,9 +6,10 @@ export default class AirbnbController
     {
        try{ 
         const list = await AirbnbDAO.getAllLists();
+      
         if(list)
         {
-            res.status(200).json({list : list, user : req.session.user});
+            res.status(200).json({list : list});
         }
         else
         res.status(400).json({error : "List not found"});
@@ -173,8 +174,24 @@ export default class AirbnbController
     {
         let data = req.body;
         let status = await AirbnbDAO.addUser(data.fname, data.lname, data.email, data.password);
-        req.session.user = {fname : data.fname, lname : data.lname}; 
-        res.status(200).json({msg : "added successfully", user : req.session.user});
+      
+        res.status(200).json({msg : "added successfully"});
+    }
+
+
+    static async getUser(req, res, next)
+    {
+        let data = req.body;
+        let user = await AirbnbDAO.getUser(data.email, data.password);
+      
+        if(user != null)
+        {
+            res.status(201).json({msg : "user found"});
+        }
+        else
+        {
+            res.status(400).json({msg : "Sorry invalid email or password!"});
+        }
     }
 
 
